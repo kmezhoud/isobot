@@ -2,28 +2,28 @@ from isobot.services.rag.search import search
 from isobot.services.ai_router import ask_ai
 from isobot.services.rag.ingest import ingest_pdf
 
-def ask(question: str):
-    try:
-        context_chunks = search(question)
 
-        # protection
-        if not context_chunks:
-            context_chunks = []
 
-        context = "\n".join(context_chunks)
+def ask(question: str, iso_name="iso_9001"):
 
-        prompt = f"""
-        Tu es un expert ISO 9001.
+    context_chunks = search(question, iso_name)
 
-        Contexte:
-        {context}
+    if not context_chunks:
+        return "Aucun contexte trouvé."
 
-        Question:
-        {question}
-        """
+    context = "\n\n".join(
+        c["text"] if isinstance(c, dict) else str(c)
+        for c in context_chunks
+    )
 
-        return ask_ai(prompt)
+    prompt = f"""
+Tu es un expert ISO 9001.
 
-    except Exception as e:
-        print(f"[ISOBOT ERROR] {e}")
-        return f"Erreur interne: {str(e)}"
+Contexte:
+{context}
+
+Question:
+{question}
+"""
+
+    return ask_ai(prompt)
