@@ -1,6 +1,6 @@
-# ISO 9001 Robot
+# `isobot` is a pdf reader for ISO normes
 
-## Structure du projet
+## Project Structure
 ```
 isobot/
 │
@@ -14,16 +14,48 @@ isobot/
 │   ├── services/
 │   │   ├── doc_service.py
 │   │   ├── iso_checker.py
-│   │   └── ai_service.py
+│   │   ├── ai_service.py
+│   │   ├── rag/
+│   │   │   ├── ingest.py        # ingestion PDF
+│   │   │   ├── embedding.py     # embeddings
+│   │   │   ├── vector_store.py  # stockage vecteurs
+│   │   │   ├── search.py        # recherche
+│   │   │   └── qa.py            # question/réponse
 │   ├── utils/
-│   │   └── word_parser.py
-│   └── models/
-│       └── document.py
+│   │   ├── word_parser.py
+│   │   ├── pdf_reader.py
+│   │   └── 
+│   │
+│   ├── models/
+│   │    └── document.py
+│   └──── .env
+├── data/
+│   └── iso_docs/
+│       ├── iso_9001.pdf
+│       ├── iso_27001.pdf
 │
 ├── uploads/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
+
+```
+
+## Ollama (AI Local)
+
+```{bash}
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull mistral
+
+# lancer ollama
+ollama serve
+# view service
+# http://localhost:11434"
+```
+
+```
+#Installer modèle embedding Ollama
+ollama pull nomic-embed-text
 
 ```
 
@@ -57,5 +89,4 @@ uvicorn isobot.main:isobot --reload
 #python -m uvicorn isobot.main:isobot --reload
 
 ### 4. Tester
-http://127.0.0.1:8000/home# isobot
-Robot for ISO
+http://127.0.0.1:8000

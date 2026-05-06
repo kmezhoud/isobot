@@ -6,3 +6,7 @@ sqlalchemy
 psycopg2-binary
 python-multipart
 python-dotenv
+pypdf
+ollama
+numpy
+regex
