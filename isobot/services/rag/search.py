@@ -25,9 +25,11 @@ def cosine_similarity(a, b):
 # 
 #     return [text for _, text in scored[:top_k]]
 from isobot.services.rag.vector_store import get_vector_path, load_db
+from isobot.services.rag.ingest import extract_iso_name
 
-def search(question: str, iso_name="iso_9001"):
+def search(question: str, iso_name: str):
 
+  
     # 🔥 ICI (pas dans ask)
     path = get_vector_path(iso_name)
     db = load_db(path)

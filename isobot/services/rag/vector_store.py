@@ -29,7 +29,8 @@ def save_db(path, db):
         json.dump(db, f)
 
 
-def store(text, embedding, metadata=None, iso_name="iso_9001"):
+def store(text, embedding, metadata=None, iso_name=None):
+    
 
     path = get_vector_path(iso_name)
 

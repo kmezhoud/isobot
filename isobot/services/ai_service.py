@@ -1,6 +1,7 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+from isobot.services.rag.local_ai_service import ask_local
 
 #load openai_api_key from .env file
 load_dotenv()

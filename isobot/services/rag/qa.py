@@ -2,10 +2,10 @@ from isobot.services.rag.search import search
 from isobot.services.ai_router import ask_ai
 from isobot.services.rag.ingest import ingest_pdf
 
+from isobot.services.rag.ingest import extract_iso_name
 
-
-def ask(question: str, iso_name="iso_9001"):
-
+def ask(question: str, iso_name: str):
+    
     context_chunks = search(question, iso_name)
 
     if not context_chunks:

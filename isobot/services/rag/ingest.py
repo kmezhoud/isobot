@@ -4,8 +4,29 @@ from isobot.services.rag.vector_store import store, get_vector_path
 #from isobot.utils.text_splitter import split_text
 from isobot.services.rag.iso_parser import extract_iso_structure, iso_chunker
 import os
+import re
 
-def ingest_pdf(file_path: str, iso_name="iso_9001"):
+def extract_iso_name(file_path: str) -> str:
+    filename = os.path.basename(file_path).lower()
+
+    # enlever extension
+    name = os.path.splitext(filename)[0]
+
+    # normaliser
+    name = name.replace(" ", "_")
+
+    # extraire pattern iso_xxx
+    match = re.search(r"iso[_\s-]*\d+", name)
+
+    if match:
+        return match.group(0).replace(" ", "_").replace("-", "_")
+
+    # fallback si pas standardisé
+    return name
+  
+  
+def ingest_pdf(file_path: str, iso_name: str):
+    
     
     path = get_vector_path(iso_name)
 
@@ -15,6 +36,7 @@ def ingest_pdf(file_path: str, iso_name="iso_9001"):
         return
 
     print(f"[ISOBOT] Building vector store for {iso_name}...")
+    
     # 1. extraction PDF
     text = extract_pdf_text(file_path)
 
